@@ -15,7 +15,7 @@ public class Link : MonoBehaviour
     {
         rigid2D = GetComponent<Rigidbody2D>();
         animator = this.gameObject.transform.GetChild(0).GetComponent<Animator>();
-        // jump = 350;
+        // jump = 520;
     }
 
     // Update is called once per frame
