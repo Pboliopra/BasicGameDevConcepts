@@ -4,55 +4,33 @@ using UnityEngine;
 
 public class Link : MonoBehaviour
 {
-    [SerializeField] float speed;
+    [SerializeField] float jump;
     private string currentAnimaton;
     private Animator animator;
-    private Rigidbody2D ridig2D;
-    private bool isJumpPressed;
-    private float jumpForce = 850;
-    private bool isGrounded;
-    private int groundMask;
+    private Rigidbody2D rigid2D;
+    private bool isJumping;
     
     // Start is called before the first frame update
     void Start()
     {
-        ridig2D = GetComponent<Rigidbody2D>();
-        animator = GetComponent<Animator>();
-        groundMask = 1 << LayerMask.NameToLayer("Ground");
+        rigid2D = GetComponent<Rigidbody2D>();
+        animator = this.gameObject.transform.GetChild(0).GetComponent<Animator>();
     }
 
     // Update is called once per frame
     void Update()
     {
         Idle();
-        if (Input.GetKeyDown(KeyCode.Space))
-        { 
-            isJumpPressed = true;
-        }
-    }
-
-    void FixedUpdate(){
-        //Check if player is stepping on ground
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, 0.1f, groundMask); 
-        if (hit.collider != null){
-            isGrounded = true;   
-        }
-        else{
-            isGrounded = false;
-        }
-
-
         //Check if trying to jump 
-        if (isJumpPressed && isGrounded)
+        if (Input.GetKeyDown(KeyCode.Space) && isJumping == false)
         {
-            ridig2D.AddForce(new Vector2(0, jumpForce));
-            isJumpPressed = false;
+            rigid2D.AddForce(new Vector2(0, jump));
             ChangeAnimationState("jump");
         }
     }
 
     void Idle(){
-        if(Input.anyKey == false){
+        if(Input.anyKey == false && isJumping == false){
            ChangeAnimationState("walk"); 
         }
     }
@@ -65,5 +43,18 @@ public class Link : MonoBehaviour
         if (currentAnimaton == newAnimation) return;
         animator.Play(newAnimation);
         currentAnimaton = newAnimation;
+    }
+
+    private void OnCollisionEnter2D(Collision2D other){
+        if(other.gameObject.CompareTag("Floor")){
+            isJumping = false;
+        }
+    }
+
+    private void OnCollisionExit2D(Collision2D other){
+        if (other.gameObject.CompareTag("Floor"))
+        {
+            isJumping = true;
+        }
     }
 }
