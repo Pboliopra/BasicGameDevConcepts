@@ -10,6 +10,7 @@ public class CameraMovement : MonoBehaviour
     void Start()
     {
         move = new Vector3(1, 0, 0);
+        // speed = 3;
     }
 
     // Update is called once per frame
