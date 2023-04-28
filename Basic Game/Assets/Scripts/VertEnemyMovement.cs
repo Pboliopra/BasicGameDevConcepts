@@ -18,6 +18,6 @@ public class VertEnemyMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.position = origin + direction * e;
+        //transform.position = origin + direction * e;
     }
 }

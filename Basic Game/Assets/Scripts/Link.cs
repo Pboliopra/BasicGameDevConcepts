@@ -8,14 +8,20 @@ public class Link : MonoBehaviour
     private string currentAnimaton;
     private Animator animator;
     private Rigidbody2D rigid2D;
+    private AudioSource audioSource_jump;
+    private AudioSource audioSource_hurt;
     private bool isJumping;
+    private bool isPlaying;
     
     // Start is called before the first frame update
     void Start()
     {
         rigid2D = GetComponent<Rigidbody2D>();
         animator = this.gameObject.transform.GetChild(0).GetComponent<Animator>();
+        audioSource_jump = this.gameObject.transform.GetChild(0).GetComponent<AudioSource>();
+        audioSource_hurt = GetComponent<AudioSource>();
         // jump = 520;
+        isPlaying = false;
     }
 
     // Update is called once per frame
@@ -27,6 +33,8 @@ public class Link : MonoBehaviour
         {
             rigid2D.AddForce(new Vector2(0, jump));
             ChangeAnimationState("jump");
+            isPlaying = true;
+            ChangeSound(audioSource_jump, isPlaying);
         }
     }
 
@@ -46,6 +54,14 @@ public class Link : MonoBehaviour
         currentAnimaton = newAnimation;
     }
 
+    void ChangeSound(AudioSource audioSource, bool isPlaying){
+        if (isPlaying)
+            {
+               audioSource_jump.Play();
+               isPlaying = false; 
+            }
+    }
+
     private void OnCollisionEnter2D(Collision2D other){
         if(other.gameObject.CompareTag("Floor")){
             isJumping = false;
@@ -56,6 +72,14 @@ public class Link : MonoBehaviour
         if (other.gameObject.CompareTag("Floor"))
         {
             isJumping = true;
+        }
+    }
+
+    private void OnCollisionExit2D(Collision2D other){
+        if (other.gameObject.CompareTag("Damage"))
+        {
+            isPlaying = true;
+            ChangeSound(audioSource_hurt, isPlaying);
         }
     }
 }
