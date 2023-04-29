@@ -5,18 +5,20 @@ using UnityEngine.UIElements;
 
 public class Link : MonoBehaviour
 {
-    [SerializeField] float jump;
-    private string currentAnimaton;
+    [SerializeField] float jumpForce;
+    private string currentAnimaton; // Used to check if changing animation is required
     private Animator animator;
-    private Rigidbody2D rigid2D;
+    private Rigidbody2D rigid2D; // Used to add forces
+
+    // SFXs
     [SerializeField] AudioClip clip_jump;
     [SerializeField] AudioClip clip_hurt;
+    private AudioSource audioSource; // References Link's audio source
+    private bool canPlaySFX; // Checks if Link is not crying (playing hurt sound)
+    private bool isJumping; // Checks if Link is already jumping
+    private Vector3 startingPos; // Starting position of the parent object (cotains the camera)
 
-    private AudioSource audioSource;
-    private bool jumpSignal;
-    private bool isJumping;
-    private Vector3 startingPos;
-    private bool canPlaySFX;
+    private int cash; // Links money
     
     // Start is called before the first frame update
     void Start() {
@@ -32,14 +34,8 @@ public class Link : MonoBehaviour
     // Update is called once per frame
     void Update() {
         Idle();
-        if (Input.GetKeyDown(KeyCode.Space)) {
-            if (!isJumping) {
-                isJumping = true;
-                rigid2D.AddForce(new Vector2(0, jump));
-                ChangeAnimationState("jump");
-                PlayJumpSound(canPlaySFX);
-            }
-        }
+        if (Input.GetKey(KeyCode.Space) && !isJumping)
+            Jump();
     }
 
     void Idle() {
@@ -53,31 +49,33 @@ public class Link : MonoBehaviour
         smoothly and returns them upon inputs
         */
         if (currentAnimaton == newAnimation) return;
-        animator.Play(newAnimation);
         currentAnimaton = newAnimation;
+        animator.Play(newAnimation);
     }
 
+    // Jump routine: has to block further jumps, adds a vertical force and plays SFX if possible
+    void Jump() {
+        isJumping = true;
+        rigid2D.AddForce(new Vector2(0, jumpForce));
+        ChangeAnimationState("jump");
+        PlayJumpSound(canPlaySFX);
+    }
+
+    // Plays the jump sound if and only if jump sound can be played
     void PlayJumpSound(bool canPlayJumpSound) {
         if (canPlayJumpSound)
             audioSource.Play();
     }
 
+    // Check collision and trigger events
     private void OnCollisionEnter2D(Collision2D other) {
         if(other.gameObject.CompareTag("Floor") && isJumping) {
             isJumping = false;
         }
     }
 
-    // private void OnCollisionExit2D(Collision2D other){
-    //     if (other.gameObject.CompareTag("Floor"))
-    //         isJumping = true;  
-    // }
-
     private void OnTriggerEnter2D(Collider2D other) {
         if (other.gameObject.CompareTag("Damage")) {
-            // Reset jump (my boy Link died)
-            isJumping = false;
-
             // Start Death Routine Asynchronously (this sounds depressing)
             StartCoroutine(death());
             
@@ -93,9 +91,13 @@ public class Link : MonoBehaviour
         canPlaySFX = false;
         audioSource.Play();
         
+        // When Link dies: freeze time, wait for sound to end on the background and then unfreeze time
         Time.timeScale = 0f;
         yield return new WaitWhile (()=> audioSource.isPlaying);
         Time.timeScale = 1f;
+
+        // Reset velocity and position
+        rigid2D.velocity = Vector3.zero;
         transform.parent.position = startingPos;
         
         // When hurt sound finishes reset audio clip and allow jump sound to play

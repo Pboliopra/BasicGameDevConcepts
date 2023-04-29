@@ -2035,7 +2035,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7805810482598798356, guid: fd3518818b1170349a4532ecd15d69ac, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7805810482704035968, guid: fd3518818b1170349a4532ecd15d69ac, type: 3}
       propertyPath: m_Name
@@ -2053,6 +2053,10 @@ PrefabInstance:
       propertyPath: clip_jump
       value: 
       objectReference: {fileID: 8300000, guid: 366c55d77cc63a54d92acc6e186b48ae, type: 3}
+    - target: {fileID: 7805810482704035970, guid: fd3518818b1170349a4532ecd15d69ac, type: 3}
+      propertyPath: jumpForce
+      value: 530
+      objectReference: {fileID: 0}
     - target: {fileID: 7805810482704035971, guid: fd3518818b1170349a4532ecd15d69ac, type: 3}
       propertyPath: m_RootOrder
       value: 1
