@@ -7,15 +7,13 @@ public class CameraMovement : MonoBehaviour
     private Vector3 move;
     [SerializeField] float speed;
     // Start is called before the first frame update
-    void Start()
-    {
+    void Start() {
         move = new Vector3(1, 0, 0);
         // speed = 3;
     }
 
     // Update is called once per frame
-    void Update()
-    {
+    void Update() {
         transform.Translate(move * speed * Time.deltaTime);
     }
 }

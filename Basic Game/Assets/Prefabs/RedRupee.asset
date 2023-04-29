@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b79801b09e91f898ab2b8cc3532204b, type: 3}
   m_Name: RedRupee
   m_EditorClassIdentifier: 
-  value: 0
-  sprite: {fileID: 0}
+  value: 20
+  sprite: {fileID: -67744431, guid: eb3a0f0d8cea8b8b6bd78638152000ab, type: 3}
