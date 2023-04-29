@@ -11,6 +11,7 @@ public class Link : MonoBehaviour
     private AudioSource audioSource_jump;
     private AudioSource audioSource_hurt;
     private bool isJumping;
+    private bool hasVerticalVelocity;
     private bool isPlaying;
     
     // Start is called before the first frame update
@@ -69,15 +70,15 @@ public class Link : MonoBehaviour
     }
 
     private void OnCollisionExit2D(Collision2D other){
-        if (other.gameObject.CompareTag("Floor"))
-        {
+        if (other.gameObject.CompareTag("Floor")) {
             isJumping = true;
-        }
+            isPlaying = true;
+            ChangeSound(audioSource_hurt, isPlaying);
+        }   
     }
 
-    private void OnCollisionExit2D(Collision2D other){
-        if (other.gameObject.CompareTag("Damage"))
-        {
+    private void OnTriggerEnter(Collider other) {
+        if (other.gameObject.CompareTag("Damage")) {
             isPlaying = true;
             ChangeSound(audioSource_hurt, isPlaying);
         }
