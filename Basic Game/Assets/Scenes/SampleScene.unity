@@ -218,7 +218,7 @@ GameObject:
   - component: {fileID: 426817708}
   - component: {fileID: 426817709}
   m_Layer: 0
-  m_Name: ManagerOfGame
+  m_Name: GameManager
   m_TagString: WeManage
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -643,7 +643,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &730010716
 GameObject:
@@ -4902,7 +4902,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5178055615025638398, guid: af7b5e7da78e31a7c8e712799ea14c75, type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 5178055615025638398, guid: af7b5e7da78e31a7c8e712799ea14c75, type: 3}
       propertyPath: m_LocalPosition.x
@@ -6788,6 +6788,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8232772443187576527, guid: daf2f3440ec53e53f8fdb6c6b80273af, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9065266387822024985, guid: daf2f3440ec53e53f8fdb6c6b80273af, type: 3}
+      propertyPath: m_PlayOnAwake
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: daf2f3440ec53e53f8fdb6c6b80273af, type: 3}
 --- !u!82 &2104903359 stripped
@@ -6802,6 +6810,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1467248476}
     m_Modifications:
+    - target: {fileID: 1801072977220231184, guid: fd3518818b1170349a4532ecd15d69ac, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
     - target: {fileID: 1801072977220231186, guid: fd3518818b1170349a4532ecd15d69ac, type: 3}
       propertyPath: scoreUI
       value: 

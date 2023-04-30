@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class ManagerOfGame : MonoBehaviour {
+public class GameManager : MonoBehaviour {
     [SerializeField] GameObject[] enemies;
     [SerializeField] GameObject scoreUI;
     [SerializeField] GameObject endScreen;
