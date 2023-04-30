@@ -17,11 +17,12 @@ public class Link : MonoBehaviour{
     private bool canPlaySFX; // Checks if Link is not crying (playing hurt sound)
     private bool isJumping; // Checks if Link is already jumping
     private Vector3 startingPos; // Starting position of the parent object (cotains the camera)
+    private Vector3 linkStartingPos; // Starting position of the object (Player/Link)
 
     [SerializeField] TMP_Text scoreUI;
     private int cash; // Thy money == Score
     private Collider2D collisionMemo; // This variable is used avoid double claiming rupees
-    
+    [SerializeField] ManagerOfGame gameManager;
     // Start is called before the first frame update
     void Start() {
         rigid2D = GetComponent<Rigidbody2D>();
@@ -30,6 +31,7 @@ public class Link : MonoBehaviour{
         walletAudio = this.gameObject.transform.GetChild(1).GetComponent<AudioSource>();
         audioSource.clip = clip_jump;
         startingPos = transform.parent.position;
+        linkStartingPos = transform.position;
         canPlaySFX = true;
         isJumping = false;
     }
@@ -79,14 +81,13 @@ public class Link : MonoBehaviour{
     }
     // Check trigger events
     private void OnTriggerEnter2D(Collider2D other) {
-        if (collisionMemo == other) return;
-
         if (other.gameObject.CompareTag("Damage")) {
             // Start Death Routine Asynchronously (this sounds depressing)
             StartCoroutine(death());
-            
+            return;
         }
-        else if (other.gameObject.CompareTag("Rupee")) {
+        if (collisionMemo == other) return;
+        if (other.gameObject.CompareTag("Rupee")) {
             IScoringObject rupee = other.gameObject.GetComponent<IScoringObject>();
             Destroy(other.gameObject);
             walletAudio.Play();
@@ -110,7 +111,10 @@ public class Link : MonoBehaviour{
         // Reset velocity and position
         rigid2D.velocity = Vector3.zero;
         transform.parent.position = startingPos;
+        transform.position = linkStartingPos;
         
+        gameManager.Reset();
+
         // When hurt sound finishes reset audio clip and allow jump sound to play
         audioSource.clip = clip_jump;
         canPlaySFX = true;
