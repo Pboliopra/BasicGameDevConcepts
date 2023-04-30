@@ -4116,6 +4116,10 @@ PrefabInstance:
       value: 520
       objectReference: {fileID: 0}
     - target: {fileID: 7805810482704035970, guid: fd3518818b1170349a4532ecd15d69ac, type: 3}
+      propertyPath: scoreUI
+      value: 
+      objectReference: {fileID: 1569674072}
+    - target: {fileID: 7805810482704035970, guid: fd3518818b1170349a4532ecd15d69ac, type: 3}
       propertyPath: clip_hurt
       value: 
       objectReference: {fileID: 8300000, guid: ccbdc19039fc98542b643efe42ef9a16, type: 3}
@@ -4839,7 +4843,7 @@ GameObject:
   - component: {fileID: 1569674073}
   - component: {fileID: 1569674072}
   m_Layer: 5
-  m_Name: ScoreText
+  m_Name: ScoreUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6356,7 +6360,7 @@ GameObject:
   - component: {fileID: 2034753778}
   - component: {fileID: 2034753777}
   m_Layer: 5
-  m_Name: ScoreUI
+  m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
