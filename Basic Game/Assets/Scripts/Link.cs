@@ -1,10 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
+using TMPro;
 
-public class Link : MonoBehaviour
-{
+public class Link : MonoBehaviour{
     [SerializeField] float jumpForce;
     private string currentAnimaton; // Used to check if changing animation is required
     private Animator animator;
@@ -18,7 +17,10 @@ public class Link : MonoBehaviour
     private bool isJumping; // Checks if Link is already jumping
     private Vector3 startingPos; // Starting position of the parent object (cotains the camera)
 
-    private int cash; // Links money
+    [SerializeField] TMP_Text scoreUI;
+    private int cash; // Thy money == Score
+
+    private Collider2D collisionMemo;
     
     // Start is called before the first frame update
     void Start() {
@@ -75,22 +77,27 @@ public class Link : MonoBehaviour
     }
 
     private void OnTriggerEnter2D(Collider2D other) {
+        if (collisionMemo == other) return;
+
         if (other.gameObject.CompareTag("Damage")) {
             // Start Death Routine Asynchronously (this sounds depressing)
             StartCoroutine(death());
             
         }
-
         else if (other.gameObject.CompareTag("Rupee")) {
-
+            IScoringObject rupee = other.gameObject.GetComponent<IScoringObject>();
+            Destroy(other.gameObject);
+            cash += rupee.GetValue();
+            scoreUI.text = " Cash: " + cash; 
         }
+        collisionMemo = other;
     }
 
     IEnumerator death() {        
         audioSource.clip = clip_hurt;
         canPlaySFX = false;
         audioSource.Play();
-        
+        scoreUI.text = " Cash: 0"; 
         // When Link dies: freeze time, wait for sound to end on the background and then unfreeze time
         Time.timeScale = 0f;
         yield return new WaitWhile (()=> audioSource.isPlaying);

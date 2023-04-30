@@ -4,9 +4,6 @@ using UnityEngine;
 
 [CreateAssetMenu(fileName = "Rupee" , menuName = "Rupee")]
 public class Rupee : ScriptableObject {
-    [SerializeField] int value;
+    public int value;
     public Sprite sprite;
-    public int GetValue(){
-        return value;
-    }
 }
