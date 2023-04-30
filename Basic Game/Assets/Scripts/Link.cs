@@ -119,4 +119,9 @@ public class Link : MonoBehaviour{
         audioSource.clip = clip_jump;
         canPlaySFX = true;
     }
+
+    // Sends cash data to other classes
+    public int GetCash() {
+        return cash;
+    }
 }
