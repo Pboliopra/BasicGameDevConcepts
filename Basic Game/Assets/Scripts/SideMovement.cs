@@ -2,8 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SideMovement : MonoBehaviour
-{
+public class SideMovement : MonoBehaviour {
     [SerializeField] float amplitude;
     [SerializeField] float speed;
     [SerializeField] Vector3 direction;
