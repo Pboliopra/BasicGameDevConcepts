@@ -6,28 +6,25 @@ public class SideMovement : MonoBehaviour {
     [SerializeField] float amplitude;
     [SerializeField] float speed;
     [SerializeField] Vector3 direction;
-
-    private SpriteRenderer sprite;
-
-
+    private SpriteRenderer sprite; // creates a sprite rerer object
     float angle;
-    float prev;
+    float prev; // previous sine value (last frame)
+    [SerializeField] bool isFlipped; // flip boolean
+    private Vector3 origin; 
 
-    [SerializeField] bool sineIsIncreasing;
-    private Vector3 origin;
-    // Start is called before the first frame update
+    // sets initial position as 0, prev as 0 and flip boolean as something given in unity
     void Start() {
         origin = transform.position;
         sprite = this.gameObject.transform.GetChild(0).GetComponent<SpriteRenderer>();
         prev = 0;
-        sprite.flipX = sineIsIncreasing;
+        sprite.flipX = isFlipped;
     }
 
-    // Update is called once per frame
+    // Updates position of the ghost which is described by a sine function
     void Update() {
         float sine = Mathf.Sin(angle);
-        if ((sineIsIncreasing && sine - prev < 0) || (!sineIsIncreasing && sine - prev > 0)) {
-            sineIsIncreasing = !sineIsIncreasing;
+        if ((isFlipped && sine - prev < 0) || (!isFlipped && sine - prev > 0)) {
+            isFlipped = !isFlipped;
             sprite.flipX = !sprite.flipX;
         } 
 

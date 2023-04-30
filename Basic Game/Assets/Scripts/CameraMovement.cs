@@ -6,13 +6,13 @@ public class CameraMovement : MonoBehaviour
 {
     private Vector3 move;
     [SerializeField] float speed;
-    // Start is called before the first frame update
+    // Declares movement to be 1 on x
     void Start() {
         move = new Vector3(1, 0, 0);
         // speed = 3;
     }
 
-    // Update is called once per frame
+    // Updates position
     void Update() {
         transform.Translate(move * speed * Time.deltaTime);
     }
