@@ -22,7 +22,7 @@ public class Link : MonoBehaviour{
     [SerializeField] TMP_Text scoreUI;
     private int cash; // Thy money == Score
     private Collider2D collisionMemo; // This variable is used avoid double claiming rupees
-    [SerializeField] ManagerOfGame gameManager;
+    [SerializeField] GameManager gameManager;
     // Start is called before the first frame update
     void Start() {
         rigid2D = GetComponent<Rigidbody2D>();
@@ -112,6 +112,8 @@ public class Link : MonoBehaviour{
         rigid2D.velocity = Vector3.zero;
         transform.parent.position = startingPos;
         transform.position = linkStartingPos;
+        isJumping = false;
+        ChangeAnimationState("walk");
         
         gameManager.Reset();
 
