@@ -13,6 +13,10 @@ public class GameManager : MonoBehaviour {
     [SerializeField] AudioSource music;
     [SerializeField] AudioSource victorySound;
 
+    void Start() {
+        scoreUI.SetActive(true);
+    }
+
     public void CompleteLevel() {
         scoreUI.SetActive(false);
         endScreen.SetActive(true);
